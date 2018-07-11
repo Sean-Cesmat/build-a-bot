@@ -1,36 +1,55 @@
 <template>
   <div id="app">
-    <header>
-      <nav>
-        <ul>
-          <li class="nav-item">
-            <router-link :to="{name: 'Home'}" exact class="nav-link">
-              <img class="logo" src="./assets/build-a-bot-logo.png" />
-              Build-a-Bot
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link :to="{name: 'Build'}" exact class="nav-link">
-              Build
-            </router-link>
-          </li>
-        </ul>
-      </nav>
-    </header>
-    <div class="container">
-      <aside class="aside">
-        <router-view name="sidebar"/>
-      </aside>
-      <main>
-        <router-view/>
-      </main>
+      <header>
+        <nav>
+          <ul>
+            <li class="nav-item">
+              <router-link :to="{name: 'Home'}" exact class="nav-link">
+                <img class="logo" src="./assets/build-a-bot-logo.png" />
+                Build-a-Bot
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link :to="{name: 'Build'}" exact class="nav-link">
+                Build
+              </router-link>
+            </li>
+            <li class="nav-item cart">
+              <router-link to="/cart" exact class="nav-link">
+                Cart
+              </router-link>
+              <div class="cart-items">
+                  {{ cart.length }}
+              </div>
+            </li>
+          </ul>
+        </nav>
+      </header>
+      <div class="container">
+        <aside class="aside">
+          <router-view name="sidebar"/>
+        </aside>
+        <main>
+          <router-view/>
+        </main>
+      </div>
     </div>
-  </div>
 </template>
 
 <script>
+import { mapState, mapGeters } from 'vuex';
+
 export default {
   name: 'app',
+  computed: {
+    // same as below
+    // ...mapState(
+    //   {cart: state => state.robots.cart,}
+    // ),
+    cart() {
+      return this.$store.state.robots.cart;
+    },
+  },
 };
 </script>
 
@@ -88,5 +107,22 @@ ul {
 }
 .router-link-active {
   color: #fff;
+}
+.nav-item.cart {
+  position: relative;
+  margin-left: auto;
+  border-right: none;
+}
+.cart-items {
+  position: absolute;
+  top: -5px;
+  right: -9px;
+  font-size: 16px;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  display: inline-block;
+  border-radius: 100px;
+  background-color: mediumseagreen;
 }
 </style>
